@@ -161,44 +161,31 @@ void search(int arr[],int top)
             printf("\n%d Elements found...",c);
     }
 }
-void binarySearch(int arr[],int low, int high,int top)
+void binarySearch(int arr[],int t)
 {
-    if(top==-1)
-    {
-        printf("\nStack is empty..");
-    }
-    else
-    {
-        int sele,find=-1;
-        printf("Enter element that you want to search : ");
-        scanf("%d",sele);
-        while(low <= high)
-        {
-            int mid=(low+high)/2;
-            
-            if(arr[mid]==sele)
-            {
-                find=mid;
-            }
-            if(sele>mid)
-            {
-                low=mid+1;
-            }
-            else
-            {
-                high=mid-1;
-            }
-        }
-        if(find==-1)
-        {
-            printf("\nElement not found.");
-        }
-        else
-        {
-            printf("\nElement found at index : %d",find);
-        }
-    }
+  int mid,low=0,high=t,ele;
+  printf("\nEnter element that you want to search : ");
+  scanf("%d",&ele);
+  sort(arr,t);
+  while(low<=high)
+  {
+   mid=(low+high)/2;
+   if(arr[mid]>ele)
+    high=mid-1;
+   else if(arr[mid]<ele)
+    low=mid+1;
+   else
+   {
+    printf("\n%d Element is Found at index %d",ele,mid);
+    break;
+   }
+  }
+  if(low>high)
+  {
+   printf("\n%d Element is Not Found",ele);
+  }
 }
+
 int main()
 {
  int arr[max],top=-1,ele,choice;
@@ -237,7 +224,7 @@ int main()
     search(arr,top);
     break;
   case 7:
-    binarySearch(arr,0,top,top);
+    binarySearch(arr,top);
     break;
   case 8:
     exit(0);
