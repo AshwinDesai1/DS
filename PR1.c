@@ -35,8 +35,29 @@ int delete(int arr[],int top)
   }
   else
   {
-   printf("\nRemoved element : %d ",arr[top]);
-   top--;
+   int rind;
+   printf("Enter index : ");
+   scanf("%d",&rind);
+   if(rind>top)
+   {
+       printf("Please enter correct index");
+   }
+   else
+   {
+       printf("\nRemoved element : %d ",arr[rind]);
+       arr[rind]=0;
+       int i=0,n=0;
+       while(n<=top)
+       {
+           if(arr[n]!=0)
+           {
+               arr[i]=arr[n];
+               i++;
+           }
+           n++;
+       }
+       top--;
+   }
   }
   return top;
 } 
