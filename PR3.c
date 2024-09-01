@@ -85,6 +85,69 @@ void pop(int Stack[],int *top1,int *top2)
         goto x;
     }
 }
+void peep(int Stack[],int *top1,int *top2)
+{
+    int stack_choice=0,ele,i,f=0;
+    x:
+    printf("\n1 For Peep in Stack 1 ");
+    printf("\n2 For Peep in Stack 2 ");
+    printf("\nEnter your choice : ");
+    scanf("%d",&stack_choice);
+    
+    if(stack_choice==1)
+    {
+        if(*top1==-1)
+        {
+            printf("\nStack 1 is underflow.");
+        }
+        else
+        {
+            printf("\nEnter element that you want to find : ");
+            scanf("%d",&ele);
+            for(i=0;i<=(*top1);i++)
+            {
+                if(Stack[i]==ele)
+                {
+                    printf("\n%d Found at index : %d in Stack 1.",ele,i);
+                    f++;
+                }
+            }
+            if(f==0)
+            {
+                printf("\nElement not found.");
+            }
+        }
+    }
+    else if(stack_choice==2)
+    {
+        if(*top2==max)
+        {
+            printf("\nStack 2 is underflow.");
+        }
+        else
+        {
+            printf("\nEnter element that you want to find : ");
+            scanf("%d",&ele);
+            for(i=max-1;i>=(*top2);i--)
+            {
+                if(Stack[i]==ele)
+                {
+                    printf("\n%d Found at index : %d in Stack 2.",ele,i);
+                    f++;
+                }
+            }
+            if(f==0)
+            {
+                printf("\nElement not found.");
+            }
+        }
+    }
+    else
+    {
+        printf("\nPlease enter correct stack number!.");
+        goto x;
+    }
+}
 
 int main() {
    int Stack[max],t1=-1,t2=max,*top1=&t1,*top2=&t2,choice;
@@ -92,7 +155,9 @@ int main() {
    {
        printf("\n\n1 For push ");
        printf("\n2 For pop ");
-       printf("\n3 For exit ");
+       printf("\n3 For peep ");
+       printf("\n4 For exit");
+       printf("\nEnter your choice : ");
        scanf("%d",&choice);
        
        switch(choice)
@@ -104,6 +169,9 @@ int main() {
                 pop(Stack,top1,top2);
                 break;
             case 3:
+                peep(Stack,top1,top2);
+                break;
+            case 4:
                 exit(0);
                 break;
             default:
