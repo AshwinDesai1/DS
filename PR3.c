@@ -216,6 +216,51 @@ void modify(int Stack[],int *top1,int *top2)
         goto x;
     }
 }
+void display(int Stack[],int *top1,int *top2)
+{
+    int stack_choice=0,i;
+    x:
+    printf("\n1 For Display Stack 1 ");
+    printf("\n2 For Display Stack 2 ");
+    printf("\nEnter your choice : ");
+    scanf("%d",&stack_choice);
+    printf("\n");
+    if(stack_choice==1)
+    {
+        if(*top1==-1)
+        {
+            printf("\nStack 1 is underflow.");
+        }
+        else
+        {
+            printf("Stack 1\nIndex : Element ");
+            for(i=0;i<=(*top1);i++)
+            {
+                       printf("\n  %d   :   %d ",i,Stack[i]);
+            }
+        }
+    }
+    else if(stack_choice==2)
+    {
+        if(*top2==max)
+        {
+            printf("\nStack 2 is underflow.");
+        }
+        else
+        {
+           printf("Stack 2\nIndex : Element ");
+            for(i=max-1;i>=(*top2);i--)
+            {
+                   printf("\n  %d   :   %d ",i,Stack[i]);
+            }
+        }
+    }
+    else
+    {
+        printf("\nPlease enter correct stack number!.");
+        goto x;
+    }
+}
 
 int main() {
    int Stack[max],t1=-1,t2=max,*top1=&t1,*top2=&t2,choice;
@@ -225,7 +270,8 @@ int main() {
        printf("\n2 For pop ");
        printf("\n3 For peep ");
        printf("\n4 For modify");
-       printf("\n5 For exit");
+       printf("\n5 For display");
+       printf("\n6 For exit");
        printf("\nEnter your choice : ");
        scanf("%d",&choice);
        
@@ -244,6 +290,9 @@ int main() {
                 modify(Stack,top1,top2);
                 break;
             case 5:
+                display(Stack,top1,top2);
+                break;
+            case 6:
                 exit(0);
                 break;
             default:
