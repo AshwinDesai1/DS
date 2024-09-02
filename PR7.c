@@ -1,10 +1,15 @@
 #include <stdio.h>
 #include<stdlib.h>
 #define max 5
-void insert(int DQ[],int *f, int *r)
+void insert(int DQ[],int *flt, int *rlt,int *frt,int *rrt)
 {
-    int ele;
-    if(*r==max-1)
+    int queue_choice=0,ele;
+    x:
+    printf("\n1 For insert in Queue from Left end.");
+    printf("\n2 For insert in Queue from Right end.");
+    printf("\nEnter your choice : ");
+    scanf("%d",&queue_choice);
+    if(*rlt==*rrt-1)
     {
         printf("\nQueue is full.");
     }
