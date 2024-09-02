@@ -36,16 +36,21 @@ void insert(int DQ[],int *flt, int *rlt,int *frt,int *rrt)
        {
            printf("\nEnter element : ");
            scanf("%d",&ele);
-           if(*frt=max && *rrt==max)
+           if(*frt==max && *rrt==max)
            {
-               (*frt)=(*rrt)=max-1;
+               (*frt)=max-1;
+               (*rrt)=max-1;
                DQ[*rrt]=ele;
+               printf("\nfronnt right %d",*frt);
+               printf("\nrear right %d",*rrt);
                
            }
            else
            {
                (*rrt)--;
                DQ[*rrt]=ele;
+               printf("\nfronnt right %d",*frt);
+               printf("\nrear right %d",*rrt);
            }
            printf("\n%d inserted at index %d from right end.",ele,*rrt);
        }
@@ -98,13 +103,18 @@ void Delete(int DQ[],int *flt, int *rlt,int *frt,int *rrt)
         {
            if((*frt)==(*rrt))
            {
+               printf("\nLeft if");
+               printf("\n%d",*frt);
                ele=DQ[*frt];
                ind=(*frt);
                (*frt)=(*rrt)=max;
                
+               
            }
            else
            {
+               printf("\nLeft else");
+               printf("\n%d",*frt);
                ele=DQ[*frt];
                ind=(*frt);
                (*frt)--;
@@ -164,7 +174,8 @@ void Delete(int DQ[],int *flt, int *rlt,int *frt,int *rrt)
 //     }
 // }
 int main() {
-    int DQ[max],fl=-1,rl=-1,fr=max,rr=max,*flp=&fl,*rlp=&rl,*frp=&fr,*rrp=&rr,choice;
+    int DQ[max],fl=-1,rl=-1,fr=max,rr=max,*flp=&fl,*rlp=&rl,*frp=&fr,
+    *rrp=&rr,choice;
    while(1)
    {
        printf("\n\n1 For insert ");
