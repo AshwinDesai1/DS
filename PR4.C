@@ -1,74 +1,54 @@
-#include<stdio.h>
-#include<conio.h>
-int prec(char c)
-{
-    int p;
-    if(c=='+' || c=='-')
-    {
-        p=1;
-    }
-    else if(c=='*' || c=='/')
-    {
-        p=2;
-    }
-    else
-    {
-        p=0;
-    }
-    return p;
-}
-void infixToPostfix(char inf[])
-{
-    int i=0,top=-1;
-    char Stack[10];
-    char c;
-    while (inf[i]!=';')
-    {
-        c=inf[i];
+#include <stdio.h>
 
-        if(c=='+' || c=='-' || c=='*' || c== '/')
-        {
-            if(Stack[top]==-1)
-            {
-                top++;
-                Stack[top]=c;
-            }
-            x:
-            if(prec(Stack[top])<=prec(c))
-            {
-                if(top>=0)
-                {
-                  printf("%c",Stack[top]);
-                  top--;
-                  goto x;
-                }
-            }
-            else
-            {
-                top++;
-                Stack[top]=c;
-            }
-        }
-        else
-        {
-            printf("%c",inf[i]);
-        }
-        i++;
-    }
-    if(c==";")
-    {
-      while(Stack[top]>=0)
-      {
-        printf("%c",Stack[top]);
-        top--;
-      }
-    }
-    
+int operatorPriority(char operatorValue) {
+  int priority;
+  if (operatorValue == '*' || operatorValue == '/') {
+    priority = 2;
+  } else if (operatorValue == '+' || operatorValue == '-') {
+    priority = 1;
+  }
+  return priority;
 }
-void main()
-{
-    char infix[20];
-    printf("\nEnter infix : ");
-    scanf("%c",infix);
-    infixToPostfix(infix);
+
+void push(int opeArray[], int *top, char operatorValue) {
+  *top += 1;
+  opeArray[*top] = operatorValue;
+}
+
+char pop(int opeArray[], int *top) {
+  char value = opeArray[*top];
+  *top -= 1;
+  return value;
+}
+
+void main() {
+
+  int opeArray[50], i = 0, x = -1, *top = &x;
+  char ch[20], operatorPop;
+
+  printf("Enter the Infix Expression :");
+  scanf("%s", ch);
+
+  while (ch[i] != '\0') {
+
+    if (ch[i] == '+' || ch[i] == '-' || ch[i] == '*' || ch[i] == '/') {
+      if (*top == -1) {
+        push(opeArray, top, ch[i]);
+      } else {
+        while (operatorPriority(opeArray[*top]) >= operatorPriority(ch[i]) && *top >= 0) {
+          operatorPop = pop(opeArray, top);
+          printf("%c", operatorPop);
+        } 
+          push(opeArray, top, ch[i]);
+        
+      }
+    } else if (ch[i] >= 'a' && ch[i] <= 'z' || ch[i] >= 'A' && ch[i] <= 'Z') {
+      printf("%c", ch[i]);
+    }
+    i++;
+  }
+  while (*top != -1) {
+    operatorPop = pop(opeArray, top);
+    printf("%c", operatorPop);
+  }
 }
