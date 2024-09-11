@@ -89,6 +89,27 @@ void modify(int DQ[], int *f, int *r)
         }
     }
 }
+void display(int DQ[],int *f,int *r)
+{
+ int i=0;
+ printf("\n");
+ if(*f==-1)
+ {
+  printf("\nQueue is empty");
+ }
+ else
+ {
+  for(i=*f;i<max;i++)
+  {
+   printf(" %d ",DQ[i]);
+
+  if(i==max-1 && *r<*f)
+     i=-1;
+   if(i==*r)
+     break;
+  }
+ }
+}
 int main()
 {
     int DQ[max], fl = -1, rl = -1, *f = &fl, *r = &rl, choice;
@@ -114,7 +135,7 @@ int main()
             modify(DQ, f, r);
             break;
         case 4:
-            // display(DQ, flp, rlp, frp, rrp);
+            display(DQ, f,r);
             break;
         case 5:
             exit(0);
