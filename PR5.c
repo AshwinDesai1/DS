@@ -1,68 +1,110 @@
 #include <stdio.h>
+#include <ctype.h>
 
-void push(int opeArray[], char infix, int *top) {
-  *top += 1;
-  opeArray[*top] = infix;
+#define maxst 10
+
+int prec(char c)
+{
+    // Set precedence levels
+    if (c == '*' || c == '/')
+        return 2;
+    else if (c == '+' || c == '-')
+        return 1;
+    else if (c == '(')
+        return 0; // '(' should not affect precedence
+    return -1; // For ')' and any other invalid character
+
 }
 
-int operatorPriority(char operatorValue) {
-  int priority;
-  if (operatorValue == '*' || operatorValue == '/') {
-    priority = 2;
-  } else if (operatorValue == '+' || operatorValue == '-') {
-    priority = 1;
-  } else if (operatorValue == ')' || operatorValue == '(') {
-    priority = 0;
-  }
-
-  return priority;
-}
-
-char pop(int opeArray[], int *top) {
-  char operatorValue;
-  operatorValue = opeArray[*top];
-  *top -= 1;
-  return operatorValue;
-}
-
-void main() {
-  int opeArray[10], i = 0, x = -1, *top = &x;
-  char infix[100], operatorValue;
-
-  printf("Enter the Infix Expression : ");
-  scanf("%s", infix);
-
-  while (infix[i] != '\0') {
-    if (infix[i] == '+' || infix[i] == '-' || infix[i] == '*' ||
-        infix[i] == '/') {
-      if (*top == -1) {
-        push(opeArray, infix[i], top);
-      } else {
-        while (operatorPriority(opeArray[*top]) >= operatorPriority(infix[i]) &&
-               opeArray[*top] != '(' && *top != -1) {
-          operatorValue = pop(opeArray, top);
-          printf("%c", operatorValue);
-        }
-        push(opeArray, infix[i], top);
-      }
-    } else if (infix[i] == '(') {
-      push(opeArray, infix[i], top);
-    } else if (infix[i] == ')') {
-      while (opeArray[*top] != '(') {
-        operatorValue = pop(opeArray, top);
-        printf("%c", operatorValue);
-      }
-      operatorValue = pop(opeArray,top);
-    } else if (infix[i] >= 'A' && infix[i] <= 'Z' ||
-               infix[i] >= 'a' && infix[i] <= 'z') {
-              printf("%c", infix[i]);
+void push(char Stack[], char c, int *top)
+{
+    if (*top == maxst - 1)
+    {
+        printf("\nStack Full");
     }
-    i += 1;
-  }
-  while (*top != -1) {
-    operatorValue = pop(opeArray, top);
-    // if (operatorValue != '(') {
-    printf("%c", operatorValue);
-    // }
-  }
+    else
+    {
+        (*top)++;
+        Stack[*top] = c;
+    }
+}
+
+void pop(char Stack[], int *top)
+{
+    if (*top < 0)
+    {
+        printf("\nUnderflow");
+    }
+    else
+    {
+        printf("%c ", Stack[*top]);
+        (*top)--;
+    }
+}
+
+void converter(char Stack[], char In[], int *top)
+{
+    int i = 0;
+
+    while (In[i] != '\0')
+    {
+        // If the character is an operator
+        if (In[i] == '*' || In[i] == '/' || In[i] == '+' || In[i] == '-')
+        {
+            while (*top >= 0 && prec(Stack[*top]) >= prec(In[i]))
+            {
+                pop(Stack, top);
+            }
+            push(Stack, In[i], top);
+        }
+        // If the character is '('
+        else if (In[i] == '(')
+        {
+            push(Stack, In[i], top);
+        }
+        // If the character is ')'
+        else if (In[i] == ')')
+        {
+            while (*top >= 0 && Stack[*top] != '(')
+            {
+                pop(Stack, top);
+            }
+            if (*top >= 0 && Stack[*top] == '(')
+            {
+                (*top)--; // Pop the '(' from the stack
+            }
+            else
+            {
+                printf("\nMismatched parentheses");
+                return;
+            }
+        }
+        // If the character is an operand
+        else
+        {
+            printf("%c ", In[i]);
+        }
+        i++;
+    }
+
+    // Pop all the operators left in the stack
+    while (*top >= 0)
+    {
+        if (Stack[*top] == '(')
+        {
+            printf("\nMismatched parentheses");
+            return;
+        }
+        pop(Stack, top);
+    }
+}
+
+int main()
+{
+    char In[20], Stack[maxst];
+    int t = -1, *top = &t;
+    printf("\nEnter infix : ");
+    scanf("%s", In);
+    converter(Stack, In, top);
+    return 0;
 }
